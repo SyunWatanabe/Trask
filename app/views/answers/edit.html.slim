@@ -1,0 +1,46 @@
+.row
+  .col-md-offset-2.col-md-8
+    .questions
+      .box-show
+        li.icon id="question-#{@answer.question.id}" 
+          - if @answer.user.image.present?
+            = link_to image_tag(@answer.user.image.url), @answer.user
+          - else
+            = link_to image_tag("default.jpg"), @answer.user
+          span.user= link_to @answer.question.user.name, @answer.question.user
+        .text.show
+          i.q.fab.fa-quora.span.title= link_to @answer.question.title, question_path(@answer.question)
+          span.content
+            = @answer.question.content
+            = image_tag @answer.question.picture.url if @answer.question.picture? 
+
+          span.content
+              = render 'questions/tag_list', tag_list: @answer.question.tag_list
+
+          span.timestamp
+            | #{time_ago_in_words(@answer.question.created_at)}前に投稿
+            - if current_user?(@answer.question.user)
+              = link_to "[ delete ]", @answer.question, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+              
+      - unless current_user == @answer.question.user
+        .answers.box
+
+          = form_with model: @answer, local: true do |f|
+            = render 'shared/error_messages', object: f.object 
+
+            .form-group.answer
+              .form
+                = f.label :回答
+                = f.file_field :repicture,accept: 'image/jpeg,image/gif,image/png'
+                = f.text_area :reply, rows: 3, class: 'form-control', id: 'answer_reply',placeholder: '回答を記入してください。'
+                = f.hidden_field :question_id, :value => @answer.question.id
+              = f.submit "変更", class: 'btn btn-primary edit-last'
+
+          li.icon.edit id="answer-#{current_user.id}" 
+              - if current_user.image.present?
+                = link_to image_tag(current_user.image.url), current_user
+              - else
+                = link_to image_tag("default.jpg"), current_user
+              span.user= link_to current_user.name, current_user
+
+            

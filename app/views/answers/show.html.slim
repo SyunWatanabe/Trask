@@ -1,0 +1,32 @@
+.row.answer-show
+  .col-md-offset-2.col-md-8
+    .answers.show
+      .box-show
+        li.icon id="answer-#{@answer.id}" 
+          - if @answer.user.image.present?
+            = link_to image_tag(@answer.user.image.url), @answer.user
+          - else
+            = link_to image_tag("default.jpg"), @answer.user
+          span.user= link_to @answer.user.name, @answer.user
+        .text
+          i.a.fab.fa-amilia.span.title= link_to @answer.question.title, question_path(@answer.question)
+
+          span.reply
+            = @answer.reply
+            = image_tag @answer.repicture.url if @answer.repicture?
+
+          span.timestamp
+            | #{time_ago_in_words(@answer.created_at)}前に投稿
+          span.like
+            = render 'likes/like', answer: @answer
+          span.timestamp
+            - if current_user?(@answer.user)
+              = link_to "[ delete ]", @answer, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+              = link_to "[ edit ]", edit_answer_path(@answer), class: 'edit'
+
+          .comments-box
+            - unless @comments.nil?
+              h4.border Comments ( #{@comments.count} )
+              = render partial: 'comments/form', locals: { comment: @comment, answer: @answer }
+            span.comments
+              = render partial: 'comments/index', locals: { comments: @comments }

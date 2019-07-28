@@ -1,0 +1,21 @@
+.box
+  li.icon id="question-#{question.id}" 
+    - if question.user.image.present?
+      = link_to image_tag(question.user.image.url), question.user
+    - else
+      = link_to image_tag("default.jpg"), question.user
+    span.user= link_to question.user.name, question.user
+  .text
+    i.q.fab.fa-quora.span.title= link_to question.title, question_path(question)
+    span.content
+      = truncate(question.content, length:29) do
+        = link_to "read more", question_path(question)
+
+    span.content
+      = render 'questions/tag_list', tag_list: question.tag_list
+      
+    span.timestamp
+      | #{time_ago_in_words(question.created_at)}前に投稿
+      - if current_user?(question.user)
+        = link_to "[ delete ]", question, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+        = link_to "[ edit ]", edit_question_path(question), class: 'edit'

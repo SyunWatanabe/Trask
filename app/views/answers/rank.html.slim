@@ -1,0 +1,60 @@
+.row
+  .col-md-7.answer-index
+    h3  <span>P</span>opular Answers 
+    span.option
+      span = link_to 'All Questions', questions_path
+      span.slash &#047;
+      span = link_to 'All Answers', answers_path
+      span.slash &#047;
+      span = link_to 'Popular Questions', questions_rank_path
+      span.slash &#047;
+      span Popular Answers
+
+    - @iine_ranks.each do |iine|
+      .answers
+        .box 
+          li.icon id="answer-#{iine.id}" 
+            - if iine.user.image.present?
+              = link_to image_tag(iine.user.image.url), iine.user
+            - else
+              = link_to image_tag("default.jpg"), iine.user
+            span.user= link_to iine.user.name, iine.user
+          .text
+            i.a.fab.fa-amilia.span.title= link_to iine.question.title, question_path(iine.question)
+            span.reply
+              = truncate(iine.reply, length:61) do
+                = link_to "read more", answer_path(iine)
+            span.timestamp
+              | #{time_ago_in_words(iine.created_at)}前に投稿
+            span.like
+              = render 'likes/like', answer: iine
+            span.timestamp
+              = link_to 'comment',question_answer_path(iine.question.id,iine.id)
+              - if current_user?(iine.user)
+                = link_to "[ delete ]", iine, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+                = link_to "[ edit ]", edit_answer_path(iine), class: 'edit'
+
+    = will_paginate @iine_ranks
+     
+  .col-md-offset-1.col-md-4.side
+
+    p.i.fa.fa-angle-right.fa-2x.asknow <span>  質問投稿
+    = link_to 'ログインして質問する！！', new_question_path
+
+    .box-1 
+      p 人気質問 ( 回答多い順 )
+      - @get_answers_ranks.first(5).each.with_index(1) do |get_answer,i|
+        li 
+          span #{i}.
+          = link_to get_answer.title, question_path(get_answer)
+    
+    .box-2 
+      p 人気回答　( いいね多い順 )
+      - @iine_ranks.first(5).each.with_index(1) do |iine,i|
+        li 
+          span #{i}.
+          = link_to iine.reply, answer_path(iine)
+
+
+
+  

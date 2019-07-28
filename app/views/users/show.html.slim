@@ -1,0 +1,77 @@
+.row
+  aside.col-md-4
+    section.user-info
+      .ibox
+        - if @user.image.present?
+          = link_to image_tag(@user.image.url), @user
+        - else
+          = link_to image_tag("default.jpg"), @user
+        h1 = @user.name 
+        .que
+          span.num = @user.questions.count
+          p Questions
+        .ans
+          span.num = @user.answers.count
+          p Answers
+
+  .col-md-8.question-index
+    h3.show 
+      <span>Q</span>uestions  &  <span>A</span>nswers 
+    - @mixed_arraies.each do |obj|
+      - if obj.kind_of?(Question)
+        - if @user.questions.any?
+          .questions
+            .box
+              li.icon id="question-#{obj.id}" 
+                - if obj.user.image.present?
+                  = link_to image_tag(obj.user.image.url), obj.user
+                - else
+                  = link_to image_tag("default.jpg"), obj.user
+                span.user= link_to obj.user.name, obj.user
+              .text
+                i.q.fab.fa-quora.span.title= link_to obj.title, question_path(obj)
+                span.content
+                  = truncate(obj.content, length:29) do
+                    = link_to "read more", question_path(obj)
+
+                span.content
+                  = render 'questions/tag_list', tag_list: obj.tag_list
+                  
+                span.timestamp
+                  | #{time_ago_in_words(obj.created_at)}前に投稿
+                  - if current_user?(obj.user)
+                    = link_to "[ delete ]", obj, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+                    = link_to edit_question_path(obj), class: 'edit' do 
+                      = "[ edit ]"
+                    end
+
+      - else
+        - if @user.answers.any?
+          .answers
+            .box 
+              li.icon id="answer-#{obj.id}" 
+                - if obj.user.image.present?
+                  = link_to image_tag(obj.user.image.url), obj.user
+                - else
+                  = link_to image_tag("default.jpg"), obj.user
+                span.user= link_to obj.user.name, obj.user
+              .text
+                i.a.fab.fa-amilia.span.title= link_to obj.question.title, question_path(obj.question)
+                span.reply
+                  = truncate(obj.reply, length:61) do
+                    = link_to "read more", answer_path(obj)
+                span.timestamp
+                  | #{time_ago_in_words(obj.created_at)}前に投稿
+                  = render 'likes/like', answer: obj
+                span.timestamp
+                  = link_to 'comment',question_answer_path(obj.question.id,obj.id)
+                  
+                  - if current_user?(obj.user)
+                    = link_to "[ delete ]", obj, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+                    = link_to edit_answer_path(obj), class: 'edit' do
+                      = "[ edit ]"
+                    end
+                  
+    = will_paginate @mixed_arraies
+
+

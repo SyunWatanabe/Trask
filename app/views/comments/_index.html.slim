@@ -1,0 +1,12 @@
+- unless comments.nil?
+  - comments.each do |comment|
+    - unless comment.id.nil?
+      .comment-box
+        - if comment.user.image.present?
+          = link_to image_tag(comment.user.image.url), comment.user
+        - else
+          = link_to image_tag("default.jpg"), comment.user
+        .comment-text 
+          = comment.content
+          - if comment.user == current_user 
+            = link_to '[ delete ]', answer_comment_path(comment.answer_id, comment.id), method: :delete, remote: true

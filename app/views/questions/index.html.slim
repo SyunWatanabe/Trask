@@ -1,0 +1,44 @@
+.row
+  .col-md-7.question-index
+    h3  <span>A</span>LL Questions (#{@questions.count})
+    span.option
+      span All Questions
+      span.slash &#047;
+      span = link_to 'All Answers', answers_path
+      span.slash &#047;
+      span = link_to 'Popular Questions', questions_rank_path
+      span.slash &#047;
+      span = link_to 'Popular Answers', answers_rank_path
+
+    ol.questions
+      = render @questions
+    = will_paginate @questions
+
+  .col-md-offset-1.col-md-4.side
+    
+    p.i.fa.fa-angle-right.fa-2x.asknow <span>  質問投稿
+    = link_to 'ログインして質問する！！', new_question_path
+      
+    p.i.fa.fa-angle-right.fa-2x.search <span>  質問検索
+
+    dl.searchbox
+      = search_form_for @search, url: search_path do |f|
+        dt = f.text_field :title_or_content_cont ,placeholder: '検索する質問を入力...'
+        dd = f.submit ("検索") , class: 'search-btn'
+
+    .box-1 
+      p 人気質問 ( 回答多い順 )
+      - @get_answers_ranks.first(5).each.with_index(1) do |get_answer,i|
+        li 
+          span #{i}.
+          = link_to get_answer.title, question_path(get_answer)
+    
+    .box-2 
+      p 人気回答　( いいね多い順 )
+      - @iine_ranks.first(5).each.with_index(1) do |iine,i|
+        li 
+          span #{i}.
+          = link_to iine.reply, answer_path(iine)
+
+
+    

@@ -1,0 +1,66 @@
+.row
+  .col-md-7.question-index
+    h3  <span>P</span>opular Questions 
+    span.option
+      span = link_to 'All Questions', questions_path
+      span.slash &#047;
+      span = link_to 'All Answers', answers_path
+      span.slash &#047;
+      span Popular Questions
+      span.slash &#047;
+      span = link_to 'Popular Answers', answers_rank_path
+
+    - @get_answers_ranks.each do |get_answer|
+      .questions
+        .box
+          li.icon id="question-#{get_answer.id}" 
+            - if get_answer.user.image.present?
+              = link_to image_tag(get_answer.user.image.url), get_answer.user
+            - else
+              = link_to image_tag("default.jpg"), get_answer.user
+            span.user= link_to get_answer.user.name, get_answer.user
+          .text
+            i.q.fab.fa-quora.span.title= link_to get_answer.title, question_path(get_answer)
+            span.content
+              = truncate(get_answer.content, length:29) do
+                = link_to "read more", question_path(get_answer)
+
+            span.content
+              = render 'questions/tag_list', tag_list: get_answer.tag_list
+            
+            span.timestamp
+              | #{time_ago_in_words(get_answer.created_at)}前に投稿
+              - if current_user?(get_answer.user)
+                = link_to "[ delete ]", get_answer, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+                = link_to "[ edit ]", edit_question_path(get_answer), class: 'edit'
+    = will_paginate @get_answers_ranks
+    
+  .col-md-offset-1.col-md-4.side
+    
+    p.i.fa.fa-angle-right.fa-2x.asknow <span>  質問投稿
+    = link_to 'ログインして質問する！！', new_question_path
+      
+    p.i.fa.fa-angle-right.fa-2x.search <span>  質問検索
+
+    dl.searchbox
+      = search_form_for @search, url: search_path do |f|
+        dt = f.text_field :title_or_content_cont ,placeholder: '検索する質問を入力...'
+        dd = f.submit ("検索") , class: 'search-btn'
+
+    .box-1 
+      p 人気質問 ( 回答多い順 )
+      - @get_answers_ranks.first(5).each.with_index(1) do |get_answer,i|
+        li 
+          span #{i}.
+          = link_to get_answer.title, question_path(get_answer)
+    
+    .box-2 
+      p 人気回答　( いいね多い順 )
+      - @iine_ranks.first(5).each.with_index(1) do |iine,i|
+        li 
+          span #{i}.
+          = link_to iine.reply, answer_path(iine)
+
+
+
+  

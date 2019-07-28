@@ -1,0 +1,17 @@
+= form_with model: @question, local: true do |f|
+  = render 'shared/error_messages', object: f.object 
+  
+  .form-group
+    = f.label :質問タイトル
+    = f.text_field :title, class: 'form-control', id: 'question_title',placeholder: '質問内容が要約されていると回答されやすくなります。'
+
+  .form-group 
+    = f.label :タグ
+    = f.text_field :tag_list, value: @question.tag_list.join(','), class: "form-control",placeholder: '例 ) お土産,世界遺産,予算　※タグの区切りはカンマ( , )を使用'
+
+  .form-group
+    = f.label :質問内容
+    = f.file_field :picture,accept: 'image/jpeg,image/gif,image/png'
+    = f.text_area :content, rows: 3, class: 'form-control', id: 'question_content',placeholder: 'より良いアドバイスを得るために質問を詳しく書きましょう。'
+  = f.submit yield(:button_text), class: 'btn btn-primary'
+  

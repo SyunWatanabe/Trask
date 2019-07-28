@@ -1,0 +1,65 @@
+.row 
+  .col-md-offset-2.col-md-8
+    .questions
+      .box-show
+        li.icon id="question-#{@question.id}" 
+          - if @question.user.image.present?
+            = link_to image_tag(@question.user.image.url), @question.user
+          - else
+            = link_to image_tag("default.jpg"), @question.user
+          span.user= link_to @question.user.name, @question.user
+        .text.show
+          i.q.fab.fa-quora.span.title= link_to @question.title, question_path(@question)
+          span.content
+            = @question.content
+            = image_tag @question.picture.url if @question.picture?
+
+          span.content
+            = render 'questions/tag_list', tag_list: @question.tag_list
+            
+          span.timestamp
+            | #{time_ago_in_words(@question.created_at)}前に投稿
+            - if current_user?(@question.user)
+              = link_to "[ delete ]", @question, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+              = link_to "[ edit ]", edit_question_path(@question), class: 'edit'
+
+          - unless current_user == @question.user
+            button#answer-slide.fas.fa-pencil-alt 
+              | 質問に回答する 
+    
+    #ans-form
+      = render 'answers/answer_form'
+  
+    - if @question.answers.any?
+      h3
+        | Answers (#{@question.answers.count})
+
+      - @answers.each do |answer|
+        .row.answer-show
+          .answers.show
+            .box 
+              li.icon id="answer-#{answer.id}" 
+                - if answer.user.image.present?
+                  = link_to image_tag(answer.user.image.url), answer.user
+                - else
+                  = link_to image_tag("default.jpg"), answer.user
+                span.user= link_to answer.user.name, answer.user
+              .text
+                i.a.fab.fa-amilia.span.title= link_to answer.question.title, question_path(answer.question)
+
+                span.reply
+                  = answer.reply
+                  = image_tag answer.repicture.url if answer.repicture?
+
+                span.timestamp
+                  | #{time_ago_in_words(answer.created_at)}前に投稿
+                span.like
+                  = render 'likes/like', answer: answer
+                span.timestamp
+                  = link_to 'comment',question_answer_path(answer.question.id,answer.id)
+                  
+                  - if current_user?(answer.user)
+                    = link_to "[ delete ]", answer, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+                    = link_to "[ edit ]", edit_answer_path(answer), class: 'edit'
+                  
+      = will_paginate @answers

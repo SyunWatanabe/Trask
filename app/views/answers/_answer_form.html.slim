@@ -1,0 +1,19 @@
+- unless current_user == @question.user
+  .answers.box
+    = form_with model: @answer, local: true do |f|
+      = render 'shared/error_messages', object: f.object 
+      .form-group.answer
+        .form
+          = f.label :回答
+          = f.file_field :repicture,accept: 'image/jpeg,image/gif,image/png'
+          = f.text_area :reply, rows: 3, class: 'form-control', id: 'answer_reply',placeholder: '回答を記入してください。'
+          = f.hidden_field :question_id, :value => @question.id
+        = f.submit "回答する", class: 'btn btn-primary'
+        
+    - if logged_in?
+      li.icon id="answer-#{current_user.id}" 
+        - if current_user.image.present?
+          = link_to image_tag(current_user.image.url), current_user
+        - else
+          = link_to image_tag("default.jpg"), current_user
+        span.user= link_to current_user.name, current_user

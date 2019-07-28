@@ -1,0 +1,30 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      question: 質問
+      answer: 質問
+    attributes:
+      user:
+        id: ID
+        created_at: 登録日時
+        updated_at: 更新日時
+        birthday: 生年月日
+        email: メールアドレス
+        salon_id: サロン
+        password: パスワード
+        name: 名前
+        password_confirmation: パスワード（確認）
+      question:
+        id: ID
+        created_at: 登録日時
+        updated_at: 更新日時
+        title: 質問タイトル
+        content: 質問内容
+      answer:
+        id: ID
+        created_at: 登録日時
+        updated_at: 更新日時
+        reply: 回答
+      comment:
+        content: コメント

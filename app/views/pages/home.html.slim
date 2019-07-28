@@ -1,0 +1,14 @@
+.home
+  = image_tag("trask-home.jpg", :alt => "home画像")
+  h1　Let's Ask About Traveling
+
+  .homebtn
+    = link_to 'Traskとは？', about_path, class: 'btn btn-xl btn-flat-border about'
+    = link_to '質問を見る', questions_path, class: 'btn btn-xl btn-flat-border watch'
+    - unless logged_in?
+       = form_with url: testlogin_path, local: true do |f|
+        = f.hidden_field :email, :value => 'test@user.com'
+        = f.hidden_field :password, :value => 'password'
+        = f.submit 'テストユーザー', class: 'btn btn-xl btn-flat-border test'
+    - else
+        = link_to 'ログイン済み', login_path, class: 'btn btn-xl btn-flat-border locked'

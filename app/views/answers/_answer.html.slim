@@ -1,0 +1,22 @@
+.box 
+  li.icon id="answer-#{answer.id}" 
+    - if answer.user.image.present?
+      = link_to image_tag(answer.user.image.url), answer.user
+    - else
+      = link_to image_tag("default.jpg"), answer.user
+    span.user= link_to answer.user.name, answer.user
+  .text
+    i.a.fab.fa-amilia.span.title= link_to answer.question.title, question_path(answer.question)
+    span.reply
+     = truncate(answer.reply, length:61) do
+        = link_to "read more", answer_path(answer)
+    span.timestamp
+      | #{time_ago_in_words(answer.created_at)}前に投稿
+    span.like
+      = render 'likes/like', answer: answer
+    span.timestamp
+      = link_to 'comment',question_answer_path(answer.question.id,answer.id)
+      
+      - if current_user?(answer.user)
+        = link_to "[ delete ]", answer, method: :delete,data: { confirm: "You sure?" },class: 'delete'
+        = link_to "[ edit ]", edit_answer_path(answer), class: 'edit'
