@@ -84,7 +84,7 @@ test:
 #   username: trask
 #   password: <%= ENV['TRASK_DATABASE_PASSWORD'] %>
 production:
-  <<: *default
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
+　　<<: *default
+　　adapter: postgresql
+　　encoding: unicode
+　　pool: 5
