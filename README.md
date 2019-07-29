@@ -1,6 +1,5 @@
 # TRASK   -- Travel ＋ Ask --
 
-h3 旅の情報をGETして、最高の思い出を作ろう
 旅に特化したQ&amp;Aアプリです。
 
 [旅の情報をGETして、最高の思い出を作ろう ](https://trask-app.herokuapp.com "TRASK")
