@@ -28,9 +28,9 @@
 - Rails 5.2.3
 - PostgreSQL 11.3
 - Heroku
-- carriewave `-`画像アップロード
-- will_paginate `-`ページネーション
-- Ransack `-`検索機能
+- carriewave - 画像アップロード
+- will_paginate - ページネーション
+- Ransack - 検索機能
 - bootstrap4 
 - slim
 - sass
