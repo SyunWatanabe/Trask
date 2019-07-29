@@ -29,6 +29,7 @@
 - PostgreSQL 11.3
 - Heroku
 - carriewave - 画像アップロード
+- AWS S3 - 画像管理
 - will_paginate - ページネーション
 - Ransack - 検索機能
 - bootstrap4 
