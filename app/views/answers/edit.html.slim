@@ -3,10 +3,10 @@
     .questions
       .box-show
         li.icon id="question-#{@answer.question.id}" 
-          - if @answer.user.image.present?
-            = link_to image_tag(@answer.user.image.url), @answer.user
+          - if @answer.question.user.image.present?
+            = link_to image_tag(@answer.question.user.image.url), @answer.question.user
           - else
-            = link_to image_tag("default.jpg"), @answer.user
+            = link_to image_tag("default.jpg"), @answer.question.user
           span.user= link_to @answer.question.user.name, @answer.question.user
         .text.show
           i.q.fab.fa-quora.span.title= link_to @answer.question.title, question_path(@answer.question)
