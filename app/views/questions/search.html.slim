@@ -49,14 +49,14 @@
         dd = f.submit ("検索") , class: 'search-btn'
 
     .box-1 
-      p 人気の質問
+      p 人気質問 ( 回答多い順 )
       - @get_answers_ranks.first(5).each.with_index(1) do |get_answer,i|
         li 
           span #{i}.
           = link_to get_answer.title, question_path(get_answer)
     
     .box-2 
-      p 人気の回答
+      p 人気回答　( いいね多い順 )
       - @iine_ranks.first(5).each.with_index(1) do |iine,i|
         li 
           span #{i}.
