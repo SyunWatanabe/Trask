@@ -31,7 +31,9 @@
               = render 'questions/tag_list', tag_list: question.tag_list
               
             span.timestamp
-              | #{time_ago_in_words(question.created_at)}前に投稿
+              | #{time_ago_in_words(question.created_at)}前に投稿&nbsp;&nbsp;&nbsp;
+              - if question.answers.present?
+                | #{question.answers.count} 件の回答
               - if current_user?(question.user)
                 = link_to "[ delete ]", question, method: :delete,data: { confirm: "You sure?" },class: 'delete'
                 = link_to "[ edit ]", edit_question_path(question), class: 'edit'

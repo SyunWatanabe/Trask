@@ -29,7 +29,12 @@
             span.like
               = render 'likes/like', answer: iine
             span.timestamp
-              = link_to 'comment',question_answer_path(iine.question.id,iine.id)
+              - if iine.comments.count > 1
+                = link_to pluralize(iine.comments.count , 'comments'),question_answer_path(iine.question.id,iine.id)
+              - elsif iine.comments.present?
+                = link_to pluralize(iine.comments.count , 'comment'),question_answer_path(iine.question.id,iine.id)
+              - else
+                = link_to 'comment',question_answer_path(iine.question.id,iine.id)
               - if current_user?(iine.user)
                 = link_to "[ delete ]", iine, method: :delete,data: { confirm: "You sure?" },class: 'delete'
                 = link_to "[ edit ]", edit_answer_path(iine), class: 'edit'

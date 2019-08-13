@@ -15,7 +15,12 @@
     span.like
       = render 'likes/like', answer: answer
     span.timestamp
-      = link_to 'comment',question_answer_path(answer.question.id,answer.id)
+      - if answer.comments.count > 1
+        = link_to pluralize(answer.comments.count , 'comments'),question_answer_path(answer.question.id,answer.id)
+      - elsif answer.comments.present?
+        = link_to pluralize(answer.comments.count , 'comment'),question_answer_path(answer.question.id,answer.id)
+      - else
+        = link_to 'comment',question_answer_path(answer.question.id,answer.id)
       
       - if current_user?(answer.user)
         = link_to "[ delete ]", answer, method: :delete,data: { confirm: "You sure?" },class: 'delete'

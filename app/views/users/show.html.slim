@@ -8,10 +8,10 @@
           = link_to image_tag("default.jpg"), @user
         h1 = @user.name 
         .que
-          span.num = @user.questions.count
+          span.num = @questions.count
           p Questions
         .ans
-          span.num = @user.answers.count
+          span.num = @answers.count
           p Answers
 
   .col-md-8.question-index
