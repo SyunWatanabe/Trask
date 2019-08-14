@@ -2,7 +2,7 @@
 
 旅に特化したQ&amp;Aアプリです。
 
-[旅の情報をGETして、最高の思い出を作ろう ](https://trask-app.herokuapp.com "TRASK")
+[旅の情報をGETして、最高の思い出を作ろう ](http://3.214.201.160/ "TRASK")
 
 ## 機能一覧
 
@@ -26,8 +26,8 @@
 ## 使用技術
 - Ruby 2.5.1
 - Rails 5.2.3
-- PostgreSQL 11.3
-- Heroku
+- PostgreSQL 9.2.24
+- AWS EC2
 - carriewave - 画像アップロード
 - AWS S3 - 画像管理
 - will_paginate - ページネーション
