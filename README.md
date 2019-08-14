@@ -28,8 +28,8 @@
 - Rails 5.2.3
 - PostgreSQL 9.2.24
 - AWS EC2
-- carriewave - 画像アップロード
 - AWS S3 - 画像管理
+- carriewave - 画像アップロード
 - will_paginate - ページネーション
 - Ransack - 検索機能
 - bootstrap4 
