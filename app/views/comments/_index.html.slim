@@ -9,4 +9,4 @@
         .comment-text 
           = comment.content
           - if comment.user == current_user 
-            = link_to '[ delete ]', answer_comment_path(comment.answer_id, comment.id), method: :delete, remote: true
+            = link_to '[ delete ]', answer_comment_path(comment.answer_id, comment.id), method: :delete,data: { confirm: "You sure?" }, remote: true

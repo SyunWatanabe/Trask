@@ -15,7 +15,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy
     flash[:success] = "コメントを削除しました"
     redirect_to request.referrer || root_url
@@ -24,5 +23,10 @@ class CommentsController < ApplicationController
   private
     def comment_params
       params.require(:comment).permit(:content, :answer_id, :user_id)
+    end
+
+    def correct_user
+      @comment = Comment.find(params[:id])
+      redirect_to root_url if @comment.nil?
     end
 end
