@@ -26,7 +26,7 @@
                 = link_to "read more", answer_path(iine)
             span.timestamp
               | #{time_ago_in_words(iine.created_at)}前に投稿
-            span.like
+            span id=iine.id
               = render 'likes/like', answer: iine
             span.timestamp
               - if iine.comments.count > 1

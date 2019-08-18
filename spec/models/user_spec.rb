@@ -1,19 +1,55 @@
 require 'rails_helper'
 
 describe User do
-  it "is valid with a name, email, and password" do
+  it "有効なファクトリを持つ" do
     expect(FactoryBot.build(:user)).to be_valid
   end
-
-  it "is invalid without a name" do
+  it "名前がなければ無効" do
     user = FactoryBot.build(:user, name: nil)
     user.valid?
     expect(user.errors[:name]).to include("を入力してください")
   end
 
-  it "is invalid with name length grater than 10"
-  it { is_expected.to validates_length_of :name, minimum:10 }
-  it { is_expected.to validate_presence_of :email }
-  it { is_expected.to validate_presence_of :password }
-  it "is invalid with a duplicate email address"
+  it "名前は10文字以内" do
+    user = FactoryBot.build(:user, name: "a" * 11)
+    user.valid?
+    expect(user.errors[:name]).to include("は10文字以内で入力してください")
+  end
+
+  it "メールが無ければ無効" do
+    user = FactoryBot.build(:user, email: nil)
+    user.valid?
+    expect(user.errors[:email]).to include("を入力してください")
+  end
+
+  it "メールアドレスは255文字以内" do
+    user = FactoryBot.build(:user, email: "a" * 256)
+    user.valid?
+    expect(user.errors[:email]).to include("は255文字以内で入力してください")
+  end
+  it "emailのバリデーションは正しく機能しているか" do
+    addresses = %w[user@foo,com user_at_foo.org example.user@foo.foo@bar_baz.com foo@bar+baz.com foo@bar..com]
+    addresses.each do |invalid_address|
+      expect(FactoryBot.build(:user, email: invalid_address)).to be_invalid
+    end
+  end
+
+  it "同じemailは無効" do
+    user1 = FactoryBot.create(:user)
+    user2 = FactoryBot.build(:user, email: user1.email)
+    user2.valid?
+    expect(user2.errors[:email]).to include("はすでに存在します")
+  end
+
+  it "パスワードが無ければ無効" do
+    user = FactoryBot.build(:user, password: nil)
+    user.valid?
+    expect(user.errors[:password]).to include("を入力してください")
+  end
+
+  it "名前は6文字以上" do
+    user = FactoryBot.build(:user, password: "a" * 5)
+    user.valid?
+    expect(user.errors[:password]).to include("は6文字以上で入力してください")
+  end
 end

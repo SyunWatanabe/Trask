@@ -53,7 +53,7 @@
 
                 span.timestamp
                   | #{time_ago_in_words(answer.created_at)}前に投稿
-                span.like
+                span id=answer.id
                   = render 'likes/like', answer: answer
                 span.timestamp
                   - if answer.comments.count > 1

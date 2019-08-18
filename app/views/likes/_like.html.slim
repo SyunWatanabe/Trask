@@ -1,10 +1,11 @@
 span.like
   - if answer.iine?(current_user)
-    = form_with(model: answer.likes.find_by(user_id: current_user.id), method: :delete, remote: true) do |f|
+    = form_with(model: answer.likes.find_by(user_id: current_user.id),data: { remote: true }, method: :delete) do |f|
+      = hidden_field_tag :answer_id, answer.id
       = button_tag(class: "btn btn-info btn-xs active") do
         = content_tag(:span, "#{answer.likes_count}", class: "glyphicon glyphicon-star")
   - else
-    = form_with(model: answer.likes.build, remote: true) do |f|
+    = form_with(model: answer.likes.build, data: { remote: true }) do |f|
       = hidden_field_tag :answer_id, answer.id
       = button_tag(class: "btn btn-info btn-xs") do
         = content_tag(:span, "#{answer.likes_count}", class: "glyphicon glyphicon-star-empty")

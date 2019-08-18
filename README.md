@@ -29,6 +29,7 @@
 - PostgreSQL 9.2.24
 - AWS EC2
 - AWS S3 - 画像管理
+- RSpec - 単体・統合テスト
 - carriewave - 画像アップロード
 - will_paginate - ページネーション
 - Ransack - 検索機能

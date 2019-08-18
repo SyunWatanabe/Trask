@@ -62,6 +62,7 @@
                     = link_to "read more", answer_path(obj)
                 span.timestamp
                   | #{time_ago_in_words(obj.created_at)}前に投稿
+                span id=obj.id
                   = render 'likes/like', answer: obj
                 span.timestamp
                   = link_to 'comment',question_answer_path(obj.question.id,obj.id)

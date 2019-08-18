@@ -2,6 +2,6 @@
   - unless @answer.comments.exists?(user_id: current_user.id)
     = form_with model: [answer, comment], local: true do |f|
       = render 'shared/error_messages', object: f.object 
-      = f.text_area :content,rows: 1,placeholder: 'コメントを入力してください'
+      = f.text_area :content,rows: 1, id: 'comment', placeholder: 'コメントを入力してください'
       = f.hidden_field :question_id, :value => @answer.question.id
       = f.submit "コメント", class: 'btn btn-primary btn-xs comment'
