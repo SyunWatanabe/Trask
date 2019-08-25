@@ -1,3 +1,4 @@
+#review依頼
 class UsersController < ApplicationController
   require 'will_paginate/array'
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
