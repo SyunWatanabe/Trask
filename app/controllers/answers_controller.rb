@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
-  before_action :correct_user, only: :destroy
+  before_action :validate_user, only: :destroy
 
   def index
     @answers = Answer.paginate(page: params[:page])
@@ -56,7 +56,7 @@ class AnswersController < ApplicationController
       params.require(:answer).permit(:reply, :user_id, :question_id, :repicture)
     end
 
-    def correct_user
+    def validate_user
       @answer = current_user.answers.find_by(id: params[:id])
       redirect_to root_url if @answer.nil?
     end

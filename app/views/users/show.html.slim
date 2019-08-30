@@ -8,16 +8,16 @@
           = link_to image_tag("default.jpg"), @user
         h1 = @user.name 
         .que
-          span.num = @questions.count
+          span.num = @user.questions.count
           p Questions
         .ans
-          span.num = @answers.count
+          span.num = @user.answers.count
           p Answers
 
   .col-md-8.question-index
     h3.show 
       <span>Q</span>uestions  &  <span>A</span>nswers 
-    - @mixed_arraies.each do |obj|
+    - @questions_answers_arraies.each do |obj|
       - if obj.kind_of?(Question)
         - if @user.questions.any?
           .questions
@@ -65,14 +65,19 @@
                 span id=obj.id
                   = render 'likes/like', answer: obj
                 span.timestamp
-                  = link_to 'comment',question_answer_path(obj.question.id,obj.id)
-                  
+                  - if obj.comments.count > 1
+                    = link_to pluralize(obj.comments.count , 'comments'),question_answer_path(obj.question.id,obj.id)
+                  - elsif obj.comments.present?
+                    = link_to pluralize(obj.comments.count , 'comment'),question_answer_path(obj.question.id,obj.id)
+                  - else
+                    = link_to 'comment',question_answer_path(obj.question.id,obj.id)
+
                   - if current_user?(obj.user)
                     = link_to "[ delete ]", obj, method: :delete,data: { confirm: "You sure?" },class: 'delete'
                     = link_to edit_answer_path(obj), class: 'edit' do
                       = "[ edit ]"
                     end
                   
-    = will_paginate @mixed_arraies
+    = will_paginate @questions_answers_arraies
 
 

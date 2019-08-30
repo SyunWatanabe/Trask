@@ -6,9 +6,6 @@ class PagesController < ApplicationController
   def about
   end
 
-  def help
-  end
-
   def create
     user = User.find_by(email: session_params[:email].downcase)
     if user&.authenticate(session_params[:password])

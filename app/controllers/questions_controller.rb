@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
-  before_action :correct_user, only: :destroy
+  before_action :validate_user, only: :destroy
   before_action :set_search
   
   def set_search
@@ -72,7 +72,7 @@ class QuestionsController < ApplicationController
       params.require(:question).permit(:title, :content, :picture, :tag_list)
     end
 
-    def correct_user
+    def validate_user
       @question = current_user.questions.find_by(id: params[:id])
       redirect_to root_url if @question.nil?
     end

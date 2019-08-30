@@ -6,6 +6,7 @@
     - else
       = link_to image_tag("default.jpg"), question.user
     span.user= link_to question.user.name, question.user
+    
   .text
     i.q.fab.fa-quora.span.title= link_to question.title, question_path(question)
     span.content
@@ -17,7 +18,6 @@
     
     span.content
       
-
     span.timestamp
       | #{time_ago_in_words(question.created_at)}前に投稿&nbsp;&nbsp;&nbsp;
       - if question.answers.present?

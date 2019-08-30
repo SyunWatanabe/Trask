@@ -1,8 +1,7 @@
-#review依頼
 class UsersController < ApplicationController
   require 'will_paginate/array'
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
+  before_action :validate_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
   def new
@@ -15,10 +14,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @questions = @user.questions
-    @answers = @user.answers
-    @mixed_array = @questions.to_a.concat(@answers.to_a)
-    @mixed_arraies = @mixed_array.sort{|f,s| f.created_at <=> s.created_at}.reverse.paginate(page: params[:page])
+    @questions_answers_array = @user.questions.to_a.concat(@user.answers.to_a)
+    @questions_answers_arraies = @questions_answers_array.sort{|f,s| f.created_at <=> s.created_at}.reverse.paginate(page: params[:page])
   end
 
   def create
@@ -57,8 +54,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name,:email,:password,:password_confirmation,:image)
     end
 
-    def correct_user
-      @user = User.find(params[:id])
+    def validate_user
+      @user = User.find_by(id: params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
 

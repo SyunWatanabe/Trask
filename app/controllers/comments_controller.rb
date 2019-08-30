@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy]
-  before_action :correct_user, only: :destroy
+  before_action :validate_user, only: :destroy
 
   def create
     @answer = Answer.find(params[:answer_id])
@@ -25,8 +25,8 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:content, :answer_id, :user_id)
     end
 
-    def correct_user
-      @comment = Comment.find(params[:id])
+    def validate_user
+      @comment = Comment.find_by(id: params[:id])
       redirect_to root_url if @comment.nil?
     end
 end
