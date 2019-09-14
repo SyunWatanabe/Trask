@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  skip_before_action :set_user_actions
-  skip_before_action :validate_user, only: :destroy
 
   def home
     render :layout => "home"

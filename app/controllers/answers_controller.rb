@@ -1,5 +1,7 @@
 class AnswersController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
+  before_action :set_user_actions
+  before_action :validate_user, only: :destroy
   
   def index
     @answers = Answer.paginate(page: params[:page])
@@ -59,9 +61,4 @@ class AnswersController < ApplicationController
     def set_user_actions
       @user_actions = current_user.answers
     end
-
-    # def validate_user
-    #   @answer = current_user.answers.find_by(id: params[:id])
-    #   redirect_to root_url if @answer.nil?
-    # end
 end

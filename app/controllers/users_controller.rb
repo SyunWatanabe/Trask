@@ -3,9 +3,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
   before_action :validate_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
-  skip_before_action :set_user_actions
-  skip_before_action :validate_user, only: :destroy
-
+  
   def new
     @user = User.new
   end

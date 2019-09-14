@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
   before_action :set_search
+  before_action :set_user_actions
+  before_action :validate_user, only: :destroy
   
   def set_search
     @search = Question.ransack(params[:q])

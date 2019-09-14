@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :set_user_actions
-  before_action :validate_user, only: :destroy
 
   def validate_user
     @model = controller_name.classify.underscore
