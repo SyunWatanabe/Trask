@@ -1,7 +1,6 @@
 class AnswersController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
-  before_action :validate_user, only: :destroy
-
+  
   def index
     @answers = Answer.paginate(page: params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
@@ -52,12 +51,17 @@ class AnswersController < ApplicationController
   end
 
   private
+
     def answer_params
       params.require(:answer).permit(:reply, :user_id, :question_id, :repicture)
     end
-
-    def validate_user
-      @answer = current_user.answers.find_by(id: params[:id])
-      redirect_to root_url if @answer.nil?
+    
+    def set_user_actions
+      @user_actions = current_user.answers
     end
+
+    # def validate_user
+    #   @answer = current_user.answers.find_by(id: params[:id])
+    #   redirect_to root_url if @answer.nil?
+    # end
 end

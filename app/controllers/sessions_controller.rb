@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :set_user_actions
+  skip_before_action :validate_user, only: :destroy
 
   def new
   end

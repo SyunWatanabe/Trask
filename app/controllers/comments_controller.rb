@@ -25,8 +25,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:content, :answer_id, :user_id)
     end
 
-    def validate_user
-      @comment = Comment.find_by(id: params[:id])
-      redirect_to root_url if @comment.nil?
+    def set_user_actions
+      @user_actions = current_user.comments
     end
 end

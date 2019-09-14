@@ -1,5 +1,7 @@
 class LikesController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy]
+  skip_before_action :set_user_actions
+  skip_before_action :validate_user, only: :destroy
 
   def create
     @answer = Answer.find(params[:answer_id])

@@ -65,13 +65,11 @@
                 span id=obj.id
                   = render 'likes/like', answer: obj
                 span.timestamp
-                  - if obj.comments.count > 1
-                    = link_to pluralize(obj.comments.count , 'comments'),question_answer_path(obj.question.id,obj.id)
-                  - elsif obj.comments.present?
-                    = link_to pluralize(obj.comments.count , 'comment'),question_answer_path(obj.question.id,obj.id)
-                  - else
+                  - if obj.comments.count == 0
                     = link_to 'comment',question_answer_path(obj.question.id,obj.id)
-
+                  - else
+                    = link_to pluralize(obj.comments.count , 'comment', locale: :en),question_answer_path(obj.question.id,obj.id)
+                    
                   - if current_user?(obj.user)
                     = link_to "[ delete ]", obj, method: :delete,data: { confirm: "You sure?" },class: 'delete'
                     = link_to edit_answer_path(obj), class: 'edit' do
