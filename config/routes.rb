@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get    'search',  to: 'questions#search'
   get    'questions/rank',   to: 'questions#rank'
   get    'answers/rank',   to: 'answers#rank'
+  get    'questions/category/id',   to: 'questions#category'
+  get    'questions/subcategory/id',   to: 'questions#subcategory'
   resources :users
   resources :questions do
    resources :answers
@@ -19,5 +21,7 @@ Rails.application.routes.draw do
   resources :answers do
     resources :comments, only: [:create, :destroy]
   end
-  
+  resources :categories, only: [] do
+    resources :sub_categories, only: :index
+  end
 end

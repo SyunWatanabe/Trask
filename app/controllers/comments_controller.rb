@@ -1,7 +1,5 @@
 class CommentsController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy]
-  before_action :set_user_actions
-  before_action :validate_user, only: :destroy
 
   def create
     @answer = Answer.find(params[:answer_id])
@@ -16,6 +14,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.where(id: params[:id], user_id: current_user.id).first
     @comment.destroy
     flash[:success] = "コメントを削除しました"
     redirect_to request.referrer || root_url
@@ -26,7 +25,4 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:content, :answer_id, :user_id)
     end
 
-    def set_user_actions
-      @user_actions = current_user.comments
-    end
 end

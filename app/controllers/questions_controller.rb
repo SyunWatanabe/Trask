@@ -1,19 +1,20 @@
 class QuestionsController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
   before_action :set_search
-  before_action :set_user_actions
-  before_action :validate_user, only: :destroy
   
   def set_search
     @search = Question.ransack(params[:q])
     @search_questions = @search.result.page(params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
     @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
+    @sub_categories = SubCategory.all
+    @questions = Question.all
   end
 
   def index
     @search = Question.ransack(params[:q])
     @search_questions = @search.result.page(params[:page])
+    @sub_categories = SubCategory.all
     @questions = Question.paginate(page: params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
     @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
@@ -38,7 +39,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question = Question.find(params[:id])
+    @question = Question.where(id: params[:id], user_id: current_user.id).first
     if @question.update_attributes(question_params)
       flash[:success] = "質問を変更しました"
       redirect_to @question.user
@@ -58,6 +59,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @question = Question.where(id: params[:id], user_id: current_user.id).first
     @question.destroy
     flash[:success] = "質問を削除しました"
     redirect_to questions_url
@@ -66,15 +68,27 @@ class QuestionsController < ApplicationController
   def rank
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc').paginate(page: params[:page])
     @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc').paginate(page: params[:page])
+    @sub_categories = SubCategory.all
+    @questions = Question.all
+  end
+
+  def category
+    @category = Category.find(params[:id])
+    @category_questions = Question.where(category_id: params[:id])
+    @sub_categories = SubCategory.all
+    @questions = Question.all
+  end
+
+  def subcategory
+    @sub_category = SubCategory.find(params[:id])
+    @sub_category_questions = Question.where(sub_category_id: params[:id])
+    @sub_categories = SubCategory.all
+    @questions = Question.all
   end
 
   private
     def question_params
-      params.require(:question).permit(:title, :content, :picture, :tag_list)
-    end
-
-    def set_user_actions
-      @user_actions = current_user.questions
+      params.require(:question).permit(:title, :content, :picture, :tag_list, :category_id, :sub_category_id)
     end
 
 end

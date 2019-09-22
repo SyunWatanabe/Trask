@@ -1,0 +1,20 @@
+p.i.fa.fa-angle-right.fa-2x.category <span>  カテゴリ検索
+
+ul.menu
+  li.main_category 
+    = link_to "海外 ( #{@questions.where(category_id: 1).count} )", questions_category_id_path(id:1), class: 'init-bottom'
+    ul.sub_category
+      - @sub_categories.where(id: (1..7)).each do |sub_category|
+        li = link_to "#{sub_category.name } ( #{@questions.where(sub_category_id: "#{sub_category.id}").count} )", questions_subcategory_id_path(id: "#{sub_category.id}"), class: 'option'
+
+  li.main_category
+    = link_to "日本 ( #{@questions.where(category_id: 2).count} )", questions_category_id_path(id:2), class: 'init-bottom'
+    ul.sub_category
+      - @sub_categories.where(id: (8..17)).each do |sub_category|
+        li = link_to "#{sub_category.name } ( #{@questions.where(sub_category_id: "#{sub_category.id}").count} )", questions_subcategory_id_path(id: "#{sub_category.id}"), class: 'option'
+
+  li.main_category
+    = link_to "その他 ( #{@questions.where(category_id: 3).count} )", questions_category_id_path(id:3), class: 'init-bottom'
+    ul.sub_category
+      - @sub_categories.where(id: (18..22)).each do |sub_category|
+        li = link_to "#{sub_category.name } ( #{@questions.where(sub_category_id: "#{sub_category.id}").count} )", questions_subcategory_id_path(id: "#{sub_category.id}"), class: 'option'

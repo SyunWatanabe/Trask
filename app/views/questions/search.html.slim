@@ -50,6 +50,8 @@
         dt = f.text_field :title_or_content_cont ,placeholder: '検索する質問を入力...'
         dd = f.submit ("検索") , class: 'search-btn'
 
+    = render 'category'
+
     .box-1 
       p 人気質問 ( 回答多い順 )
       - @get_answers_ranks.first(5).each.with_index(1) do |get_answer,i|

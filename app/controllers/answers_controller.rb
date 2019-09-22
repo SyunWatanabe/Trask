@@ -1,7 +1,5 @@
 class AnswersController < ApplicationController
   before_action :logged_in_user, only:[:create,:destroy,:new]
-  before_action :set_user_actions
-  before_action :validate_user, only: :destroy
   
   def index
     @answers = Answer.paginate(page: params[:page])
@@ -20,7 +18,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
+    @answer = Answer.where(id: params[:id], user_id: current_user.id).first
     if @answer.update_attributes(answer_params)
       flash[:success] = "回答を変更しました"
       redirect_to @answer.question
@@ -42,6 +40,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    @answer = Answer.where(id: params[:id], user_id: current_user.id).first
     @answer.destroy
     flash[:success] = "回答を削除しました"
     redirect_to request.referrer || root_url
@@ -58,7 +57,4 @@ class AnswersController < ApplicationController
       params.require(:answer).permit(:reply, :user_id, :question_id, :repicture)
     end
     
-    def set_user_actions
-      @user_actions = current_user.answers
-    end
 end

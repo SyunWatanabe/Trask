@@ -13,5 +13,18 @@
     = f.label :質問内容
     = f.file_field :picture,accept: 'image/jpeg,image/gif,image/png'
     = f.text_area :content, rows: 3, class: 'form-control', id: 'question_content',placeholder: 'より良いアドバイスを得るために質問を詳しく書きましょう。'
+
+  .form-group
+    = f.label :カテゴリ
+    - category_options = Category.order(:id).map { |c| [c.name, c.id, data: { children_path: category_sub_categories_path(c) }] } 
+    <br>
+    = f.select :category_id, category_options, { include_blank: "1.選択" }, class: 'select-parent'
+
+    - sub_categories = @question.category.try(:sub_categories) || []
+    - sub_category_options = sub_categories.map { |c| [c.name, c.id] }
+    = f.select :sub_category_id, sub_category_options, { include_blank: "2.選択" }, class: 'select-children'
+    
+    
+
   = f.submit yield(:button_text), class: 'btn btn-primary'
   

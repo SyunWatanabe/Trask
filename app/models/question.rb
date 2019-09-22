@@ -4,6 +4,8 @@ class Question < ApplicationRecord
   validates :user_id, presence: true
   validate  :picture_size
   belongs_to :user
+  belongs_to :category
+  belongs_to :sub_category
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, PictureUploader
   has_many :answers, dependent: :destroy
