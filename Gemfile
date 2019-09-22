@@ -42,7 +42,10 @@ group :development, :test do
   # gem 'sqlite3'
   gem 'rspec-rails', '~> 3.6.0'
   gem "factory_bot_rails", "~> 4.10.0"
-
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
 end
 
 group :development do
