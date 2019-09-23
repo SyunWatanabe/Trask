@@ -16,5 +16,5 @@ ul.menu
   li.main_category
     = link_to "ジャンル ( #{@questions.where(category_id: 3).count} )", questions_category_id_path(id:3), class: 'init-bottom'
     ul.sub_category
-      - @sub_categories.where(id: (18..23)).each do |sub_category|
+      - @sub_categories.where(id: (18..25)).each do |sub_category|
         li = link_to "#{sub_category.name } ( #{@questions.where(sub_category_id: "#{sub_category.id}").count} )", questions_subcategory_id_path(id: "#{sub_category.id}"), class: 'option'
