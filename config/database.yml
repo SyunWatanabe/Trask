@@ -84,8 +84,18 @@ test:
 #   username: trask
 #   password: <%= ENV['TRASK_DATABASE_PASSWORD'] %>
 
+# production:
+#   <<: *default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: 5
+
 production:
   <<: *default
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   pool: 5
+  database: shun
+  username: shun
+  password:
+  socket: /var/lib/postgresql/postgresql.sock

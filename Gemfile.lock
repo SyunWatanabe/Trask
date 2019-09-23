@@ -65,6 +65,7 @@ GEM
     autoprefixer-rails (9.6.1)
       execjs
     bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
     bindex (0.8.1)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -119,6 +120,7 @@ GEM
       after_commit_action (~> 1.0)
     crass (1.0.4)
     diff-lcs (1.3)
+    ed25519 (1.2.4)
     erubi (1.8.0)
     excon (0.65.0)
     execjs (2.7.0)
@@ -338,6 +340,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 6.0)
   bcrypt (~> 3.1.7)
+  bcrypt_pbkdf
   bootsnap (>= 1.1.0)
   bootstrap-sass
   bootstrap-will_paginate (= 1.0.0)
@@ -351,6 +354,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   counter_culture (~> 1.8)
+  ed25519
   factory_bot_rails (~> 4.10.0)
   faker
   fog-aws
