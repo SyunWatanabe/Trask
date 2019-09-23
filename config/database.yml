@@ -93,7 +93,7 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  encoding: utf8
+  encoding: unicode
   pool: 5
   database: shun
   username: shun
