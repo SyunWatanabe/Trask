@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class LikesController < ApplicationController
-  before_action :logged_in_user, only:[:create,:destroy]
-  
+  before_action :logged_in_user, only: %i[create destroy]
+
   def create
     @answer = Answer.find(params[:answer_id])
     @answer.iine(current_user)
     @answer.reload
     respond_to do |format|
-        format.html { redirect_to request.referrer || root_url }
-        format.js
+      format.html { redirect_to request.referrer || root_url }
+      format.js
     end
   end
 
@@ -16,8 +18,8 @@ class LikesController < ApplicationController
     @answer.uniine(current_user)
     @answer.reload
     respond_to do |format|
-        format.html { redirect_to request.referrer || root_url }
-        format.js
+      format.html { redirect_to request.referrer || root_url }
+      format.js
     end
   end
 end

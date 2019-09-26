@@ -1,8 +1,9 @@
-set :default_env, {
-  AWS_ACCESS_KEY: ENV['AWS_ACCESS_KEY'],
-  AWS_SECRET_KEY: ENV['AWS_SECRET_KEY'],
-  S3_REGION: ENV['S3_REGION']
-}
+# frozen_string_literal: true
+
+set :default_env,
+    AWS_ACCESS_KEY: ENV['AWS_ACCESS_KEY'],
+    AWS_SECRET_KEY: ENV['AWS_SECRET_KEY'],
+    S3_REGION: ENV['S3_REGION']
 set :rbenv_type, :user
 set :rbenv_ruby, '2.5.1'
 set :rbenv_custom_path, '/home/shun/.rbenv'
@@ -19,7 +20,7 @@ set :repo_url, 'git@github.com:SyunWatanabe/trask.git'
 # deployするブランチ。デフォルトはmasterなのでなくても可。
 set :branch, 'master'
 
-# deploy先のディレクトリ。 
+# deploy先のディレクトリ。
 set :deploy_to, '/var/www/trask'
 
 # シンボリックリンクをはるファイル。(※後述)
@@ -31,7 +32,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # 保持するバージョンの個数(※後述)
 set :keep_releases, 5
 
-#出力するログのレベル。
+# 出力するログのレベル。
 set :log_level, :debug
 
 namespace :deploy do
@@ -42,7 +43,7 @@ namespace :deploy do
 
   desc 'Create database'
   task :db_create do
-    on roles(:db) do |host|
+    on roles(:db) do |_host|
       with rails_env: fetch(:rails_env) do
         within current_path do
           execute :bundle, :exec, :rake, 'db:create'

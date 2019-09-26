@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 module SessionsHelper
-  
   def log_in(user)
     session[:user_id] = user.id
   end
@@ -7,7 +8,7 @@ module SessionsHelper
   def logged_in_user
     unless logged_in?
       store_location
-      flash[:danger] = "ログインしてください"
+      flash[:danger] = 'ログインしてください'
       redirect_to login_url
     end
   end
@@ -19,7 +20,7 @@ module SessionsHelper
   def current_user?(user)
     user == current_user
   end
-  
+
   def logged_in?
     !current_user.nil?
   end

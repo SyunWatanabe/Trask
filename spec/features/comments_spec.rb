@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.feature "Comments", type: :feature do
-  scenario "ユーザー1がユーザー2の回答にコメントする" do
+RSpec.feature 'Comments', type: :feature do
+  scenario 'ユーザー1がユーザー2の回答にコメントする' do
     user1 = FactoryBot.create(:user)
     user2 = FactoryBot.create(:user)
     question = FactoryBot.create(:question, user_id: user1.id)
@@ -9,16 +11,16 @@ RSpec.feature "Comments", type: :feature do
 
     sign_in(user1)
 
-    expect {
-      click_link "Questions"
-      within(".questions") do
-        click_link "テストタイトル"
+    expect do
+      click_link 'Questions'
+      within('.questions') do
+        click_link 'テストタイトル'
       end
-      click_link "comment"
-      fill_in "comment", with: "テストコメント"
-      click_button "コメント"
-      expect(page).to have_content "コメントしました！！"
-      expect(page).to have_content "テストコメント"
-    }.to change(user1.comments, :count).by(1)
+      click_link 'comment'
+      fill_in 'comment', with: 'テストコメント'
+      click_button 'コメント'
+      expect(page).to have_content 'コメントしました！！'
+      expect(page).to have_content 'テストコメント'
+    end.to change(user1.comments, :count).by(1)
   end
 end

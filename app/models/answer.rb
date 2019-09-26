@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Answer < ApplicationRecord
   belongs_to :user
   belongs_to :question
@@ -21,13 +23,14 @@ class Answer < ApplicationRecord
   end
 
   def iine?(user)
-      iine_users.include?(user)
+    iine_users.include?(user)
   end
 
   private
-    def repicture_size
-      if repicture.size > 5.megabytes
-        errors.add(:repicture, "should be less than 5MB")
-      end
+
+  def repicture_size
+    if repicture.size > 5.megabytes
+      errors.add(:repicture, 'should be less than 5MB')
     end
+  end
 end

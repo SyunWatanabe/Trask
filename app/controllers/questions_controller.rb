@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
-  before_action :logged_in_user, only:[:create,:destroy,:new]
+  before_action :logged_in_user, only: %i[create destroy new]
   before_action :set_search
-  
+
   def set_search
     @search = Question.ransack(params[:q])
     @search_questions = @search.result.page(params[:page])
@@ -18,17 +20,14 @@ class QuestionsController < ApplicationController
     @questions = Question.paginate(page: params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
     @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
-    if params[:tag_name]
-      @questions = @questions.tagged_with("#{params[:tag_name]}")
-    end
+    @questions = @questions.tagged_with(params[:tag_name].to_s) if params[:tag_name]
   end
 
   def show
     @question = Question.find(params[:id])
     @answer = Answer.new
-    @answers = @question.answers.paginate(page: params[:page], :per_page => 5)
+    @answers = @question.answers.paginate(page: params[:page], per_page: 5)
   end
-  
 
   def new
     @question = Question.new
@@ -41,7 +40,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.where(id: params[:id], user_id: current_user.id).first
     if @question.update_attributes(question_params)
-      flash[:success] = "質問を変更しました"
+      flash[:success] = '質問を変更しました'
       redirect_to @question.user
     else
       render 'edit'
@@ -50,8 +49,8 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-    if  @question.save
-      flash[:success] = "質問を投稿しました！！"
+    if @question.save
+      flash[:success] = '質問を投稿しました！！'
       redirect_to questions_url
     else
       render :new
@@ -61,7 +60,7 @@ class QuestionsController < ApplicationController
   def destroy
     @question = Question.where(id: params[:id], user_id: current_user.id).first
     @question.destroy
-    flash[:success] = "質問を削除しました"
+    flash[:success] = '質問を削除しました'
     redirect_to questions_url
   end
 
@@ -87,8 +86,8 @@ class QuestionsController < ApplicationController
   end
 
   private
-    def question_params
-      params.require(:question).permit(:title, :content, :picture, :tag_list, :category_id, :sub_category_id)
-    end
 
+  def question_params
+    params.require(:question).permit(:title, :content, :picture, :tag_list, :category_id, :sub_category_id)
+  end
 end

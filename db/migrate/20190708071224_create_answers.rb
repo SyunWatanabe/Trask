@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAnswers < ActiveRecord::Migration[5.2]
   def change
     create_table :answers do |t|
@@ -7,6 +9,6 @@ class CreateAnswers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :answers, [:user_id, :question_id, :created_at]
+    add_index :answers, %i[user_id question_id created_at]
   end
 end

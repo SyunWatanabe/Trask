@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -38,61 +40,61 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # gem 'sqlite3'
-  gem 'rspec-rails', '~> 3.6.0'
-  gem "factory_bot_rails", "~> 4.10.0"
+  gem 'bcrypt_pbkdf'
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
   gem 'capistrano-rails-console'
+  gem 'capistrano-rbenv'
   gem 'ed25519'
-  gem 'bcrypt_pbkdf'
+  gem 'factory_bot_rails', '~> 4.10.0'
+  gem 'rspec-rails', '~> 3.6.0'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'launchy', '~> 2.4.3'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers',
-    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
-    branch: 'rails-5'
+      git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+      branch: 'rails-5'
 end
 
 group :production, :staging do
-    gem 'unicorn'
+  gem 'unicorn'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'slim-rails'
-gem 'html2slim'
-gem 'bootstrap-sass'
-gem 'jquery-rails'
-gem 'fog-aws'
-gem 'carrierwave'
-gem 'mini_magick'
-gem 'faker'
-gem 'will_paginate','3.1.7'
-gem 'bootstrap-will_paginate','1.0.0'
-gem 'font-awesome-sass', '~> 5.4.1'
 gem 'acts-as-taggable-on', '~> 6.0'
-gem 'tag-it-rails'
+gem 'bootstrap-sass'
+gem 'bootstrap-will_paginate', '1.0.0'
+gem 'carrierwave'
 gem 'counter_culture', '~> 1.8'
-gem 'ransack'
-gem 'rails-i18n'
+gem 'faker'
+gem 'fog-aws'
+gem 'font-awesome-sass', '~> 5.4.1'
+gem 'html2slim'
+gem 'jquery-rails'
 gem 'jquery-turbolinks'
+gem 'mini_magick'
+gem 'rails-i18n'
+gem 'ransack'
+gem 'slim-rails'
+gem 'tag-it-rails'
+gem 'will_paginate', '3.1.7'

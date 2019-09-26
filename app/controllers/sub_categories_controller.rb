@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubCategoriesController < ApplicationController
   def index
     category = Category.find(params[:category_id])
