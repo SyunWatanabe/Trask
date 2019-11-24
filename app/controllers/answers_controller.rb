@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   def index
     @answers = Answer.paginate(page: params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
-    @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
+    @iine_ranks = Answer.sort_iine_ranks
   end
 
   def edit
@@ -49,8 +49,8 @@ class AnswersController < ApplicationController
   end
 
   def rank
-    @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc').paginate(page: params[:page])
-    @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc').paginate(page: params[:page])
+    @get_answers_ranks = Question.sort_answers_ranks.paginate(page: params[:page])
+    @iine_ranks = Answer.sort_iine_ranks.paginate(page: params[:page])
   end
 
   private

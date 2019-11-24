@@ -26,6 +26,10 @@ class Answer < ApplicationRecord
     iine_users.include?(user)
   end
 
+  def self.sort_iine_ranks
+    reorder('likes_count desc').order('created_at desc')
+  end
+
   private
 
   def repicture_size

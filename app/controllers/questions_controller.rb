@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
     @search = Question.ransack(params[:q])
     @search_questions = @search.result.page(params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
-    @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
+    @iine_ranks = Answer.sort_iine_ranks
     @sub_categories = SubCategory.all
     @questions = Question.all
   end
@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
     @sub_categories = SubCategory.all
     @questions = Question.paginate(page: params[:page])
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc')
-    @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc')
+    @iine_ranks = Answer.sort_iine_ranks
     @questions = @questions.tagged_with(params[:tag_name].to_s) if params[:tag_name]
   end
 
@@ -66,7 +66,7 @@ class QuestionsController < ApplicationController
 
   def rank
     @get_answers_ranks = Question.reorder('answers_count desc').order('created_at desc').paginate(page: params[:page])
-    @iine_ranks = Answer.reorder('likes_count desc').order('created_at desc').paginate(page: params[:page])
+    @iine_ranks = Answer.sort_iine_ranks.paginate(page: params[:page])
     @sub_categories = SubCategory.all
     @questions = Question.all
   end

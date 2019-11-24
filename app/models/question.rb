@@ -13,6 +13,10 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
   acts_as_taggable
 
+  def self.sort_answers_ranks
+    reorder('answers_count desc').order('created_at desc')
+  end
+
   private
 
   def picture_size
