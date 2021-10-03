@@ -2,6 +2,9 @@
   "extends": [
     "config:base"
   ],
+  "ignorePaths": [
+    "package.json",".ruby-version"
+  ],
   "packageRules": [
     {
       "managers": ["bundler"],
