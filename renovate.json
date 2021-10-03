@@ -13,7 +13,7 @@
     },
     {
       "managers": ["bundler"],
-      "packageNames": [
+      "matchPackageNames": [
         "zengin_code", "capifla"
       ],
       "enabled": true
