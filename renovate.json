@@ -1,3 +1,16 @@
 {
-  "ignorePaths": ["package.json", ".ruby-version"]
+  "ignorePaths": ["package.json", ".ruby-version"],
+  "packageRules": [
+    {
+      "managers": ["bundler"],
+      "matchPackagePatterns": [".*"],
+      "enabled": false
+    },
+    {
+      "managers": ["bundler"],
+      "matchPackageNames": ["zengin_code", "capifla", "puma"],
+      "rangeStrategy": "bump",
+      "enabled": true
+    }
+  ]
 }
